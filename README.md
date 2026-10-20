@@ -29,19 +29,8 @@ Rather than relying on manual checks or centralized IT intervention, domain team
 
 ## 🏗️ Architecture & Workflow
 
-[ IBM Telco Churn Dataset ]
-│
-▼
-[ PySpark Ingestion Engine ] ──> Writes to Delta Lake / Lakehouse
-│
-▼
-[ FabricDataContractCLI Validation Engine ]
-├── Phase 1: Schema Validation (Columns & Types)
-├── Phase 2: Custom SQL Assertions (Business Logic)
-└── Phase 3: Soda Core Scans (Missing values, duplicates, ranges)
-│
-├── ✅ PASSED ──> Released to Downstream Consumers (Gold Layer)
-└── ❌ FAILED ──> Pipeline Blocked & Guardrail Triggered
+<img width="909" height="326" alt="image" src="https://github.com/user-attachments/assets/1231f925-a57b-4735-b017-f9ec4335619f" />
+
 
 ---
 
