@@ -84,9 +84,8 @@ pip install -r requirements.txt
 Execute the main script to see both a successful pristine data run and an intentional guardrail failure block live in your terminal:
 
 python main.py
----
-## ☁️ How to Deploy & Run in Microsoft Fabric
-```text
+☁️ How to Deploy & Run in Microsoft Fabric
+
 While this POC can run locally on PySpark, it is natively designed to integrate into Microsoft Fabric notebooks and pipelines:
 
 Upload Artifacts to Lakehouse:
