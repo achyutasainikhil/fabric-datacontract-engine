@@ -1,0 +1,29 @@
+dataProduct: customer_360_domain
+version: 1.0.0
+owner: analytics_engineering_team
+dataset: gold_customer_churn
+
+schema:
+  - name: customer_id
+    type: string
+  - name: tenure_months
+    type: integer
+  - name: monthly_charges
+    type: double
+  - name: churn
+    type: string
+
+validations:
+  sql_rules:
+    - name: no_negative_tenure
+      query: "SELECT COUNT(*) FROM {{table}} WHERE tenure_months < 0"
+      expected: 0
+
+  soda_checks: |
+    checks for temp_gold_customer_churn:
+      - missing_count(customer_id) = 0
+      - row_count > 1000
+      - invalid_count(monthly_charges) = 0:
+          valid min: 0
+          valid max: 500
+      - duplicate_count(customer_id) = 0
