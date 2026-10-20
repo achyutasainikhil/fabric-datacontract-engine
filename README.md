@@ -31,6 +31,32 @@ Rather than relying on manual checks or centralized IT intervention, domain team
 
 <img width="909" height="326" alt="image" src="https://github.com/user-attachments/assets/1231f925-a57b-4735-b017-f9ec4335619f" />
 
+Step-by-Step Workflow Breakdown
+Data Ingestion & Lakehouse Storage (main.py)
+
+The pipeline fetches the public IBM Telco Churn dataset and standardizes raw column names (e.g., mapping customerID to customer_id, tenure to tenure_months).
+
+It creates a clean PySpark DataFrame and persists it into enterprise storage (simulating a Microsoft Fabric Delta Lake Gold layer: gold_customer_churn).
+
+The Declarative Contract (datacontract.yaml)
+
+Instead of hardcoding checks inside pipeline scripts, all rules are defined in a centralized YAML file.
+
+This includes the expected schema structure, custom SQL assertions (e.g., ensuring tenure is never negative), and Soda Core quality expectations.
+
+The 3-Phase Validation Gate (FabricDataContractCLI)
+
+Phase 1 (Schema Check): Compares the DataFrame's active columns against the YAML contract specification to instantly catch breaking changes like dropped or renamed columns.
+
+Phase 2 (Custom SQL Rules): Registers a temporary SQL view and executes custom business logic assertions (e.g., counting rows where tenure_months < 0).
+
+Phase 3 (Soda Core Quality Scan): Evaluates row counts, missing values (missing_count), uniqueness (duplicate_count), and valid numeric ranges (invalid_count) using Soda Core's PySpark engine.
+
+Fail-Fast Guardrails & Execution
+
+Clean Data Demo: Primes the engine with valid data, letting it sail through all three phases and granting safe passage (ALL DATA CONTRACT CHECKS PASSED SUCCESSFULLY!).
+
+Corrupted Data Demo: Injects malformed records (negative tenure and duplicate IDs) to intentionally trip the guardrails, throwing an exception and halting the pipeline before bad data pollutes downstream consumers.
 
 ---
 
@@ -58,6 +84,7 @@ pip install -r requirements.txt
 Execute the main script to see both a successful pristine data run and an intentional guardrail failure block live in your terminal:
 
 python main.py
+
 
 ☁️ How to Deploy & Run in Microsoft Fabric
 While this POC can run locally on PySpark, it is natively designed to integrate into Microsoft Fabric notebooks and pipelines:
