@@ -31,7 +31,7 @@ Rather than relying on manual checks or centralized IT intervention, domain team
 
 <img width="909" height="326" alt="image" src="https://github.com/user-attachments/assets/1231f925-a57b-4735-b017-f9ec4335619f" />
 
-Step-by-Step Workflow Breakdown
+## Step-by-Step Workflow Breakdown
 Data Ingestion & Lakehouse Storage (main.py)
 
 The pipeline fetches the public IBM Telco Churn dataset and standardizes raw column names (e.g., mapping customerID to customer_id, tenure to tenure_months).
@@ -84,9 +84,9 @@ pip install -r requirements.txt
 Execute the main script to see both a successful pristine data run and an intentional guardrail failure block live in your terminal:
 
 python main.py
+--
 
-
-☁️ How to Deploy & Run in Microsoft Fabric
+## ☁️ How to Deploy & Run in Microsoft Fabric
 While this POC can run locally on PySpark, it is natively designed to integrate into Microsoft Fabric notebooks and pipelines:
 
 Upload Artifacts to Lakehouse:
